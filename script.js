@@ -5,15 +5,12 @@ const amountInput = document.getElementById("amount");
 const resultDiv = document.getElementById("result");
 
 window.addEventListener("load", fetchCurrencies);
-
 converterForm.addEventListener("submit", convertCurrency);
 
 async function fetchCurrencies() {
-  // https://api.exchangerate-api.com/v4/latest/USD
-  const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrencyValue}`);
+  const response = await fetch("https://open.er-api.com/v6/latest/USD");
   const data = await response.json();
 
-  console.log(data);
   const currencyOptions = Object.keys(data.rates);
 
   currencyOptions.forEach((currency) => {
@@ -36,17 +33,18 @@ async function convertCurrency(e) {
   const fromCurrencyValue = fromCurrency.value;
   const toCurrencyValue = toCurrency.value;
 
-  if (amount < 0) {
-    alert("Please ener a valid amount");
+  if (amount <= 0) {
+    alert("Please enter a valid amount");
     return;
   }
 
-  const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrencyValue}`);
+  const response = await fetch(
+    `https://open.er-api.com/v6/latest/${fromCurrencyValue}`
+  );
   const data = await response.json();
 
   const rate = data.rates[toCurrencyValue];
   const convertedAmount = (amount * rate).toFixed(2);
 
   resultDiv.textContent = `${amount} ${fromCurrencyValue} = ${convertedAmount} ${toCurrencyValue}`;
-
 }
