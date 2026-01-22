@@ -10,7 +10,7 @@ converterForm.addEventListener("submit", convertCurrency);
 
 async function fetchCurrencies() {
   // https://api.exchangerate-api.com/v4/latest/USD
-  const response = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+  const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrencyValue}`);
   const data = await response.json();
 
   console.log(data);
@@ -48,4 +48,5 @@ async function convertCurrency(e) {
   const convertedAmount = (amount * rate).toFixed(2);
 
   resultDiv.textContent = `${amount} ${fromCurrencyValue} = ${convertedAmount} ${toCurrencyValue}`;
+
 }
